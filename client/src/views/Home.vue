@@ -1,6 +1,38 @@
 <template>
     <v-app id="inspire">
         <v-main class="blue-grey lighten-5">
+            <v-overlay :z-index="zIndex" :value="overlay">
+                <v-card class="mx-auto" width="400" max-width="500">
+                    <v-img height="250" src="@/assets/life.jpeg">
+                        <v-app-bar flat color="rgba(0, 0, 0, 0)">
+                            <v-spacer />
+                            <v-btn color="white" icon @click="overlay = false">
+                                <v-icon>mdi-close</v-icon>
+                            </v-btn>
+                        </v-app-bar>
+
+                    </v-img>
+                    <v-card-title style="background-color: #e8e8e8;">
+                        <p style="color: #222;">
+                            <span class="my-4 text-subtitle-2">生活スコア　{{ score_p }}/21</span>
+                            <v-rating readonly :value="5*(score_p/21)" dense color="orange" background-color="orange" hover class="mr-2">
+                            </v-rating>
+                        </p>
+                        <v-spacer />
+                        <p style="color: #222;">
+                            <span class="my-4 text-subtitle-2">食事スコア　{{ score_eat }}/31</span>
+                            <v-rating readonly :value="5*(score_eat/31)" dense color="orange" background-color="orange" hover class="mr-2">
+                            </v-rating>
+                        </p>
+                    </v-card-title>
+                    <v-card-title class="indigo lighten-1">
+                        <p style="margin: 0 auto;">総合スコア　{{ score_p + score_eat }}/52
+                            <v-rating readonly :value="5*((score_p+score_eat)/52)" dense color="orange" background-color="orange" hover class="mr-2">
+                            </v-rating>
+                        </p>
+                    </v-card-title>
+                </v-card>
+            </v-overlay>
             <v-container>
                 <form>
                     <v-row>
@@ -227,7 +259,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import draggable from "vuedraggable"
 
 export default {
@@ -235,6 +266,8 @@ export default {
         draggable,
     },
     data: () => ({
+        overlay: false,
+        zIndex: 0,
         bachelors: ["1年", "2年", "3年", "4年"],
         timings: ["できるタイミングですぐに", "締切日前に適度に", "ギリギリ", "やらない"],
         foods: ["コンビニ飯", "ファストフード店", "飲食店", "居酒屋", "お惣菜", "手作り", "食べない"],
@@ -502,9 +535,9 @@ export default {
                 }
             }
 
-            console.log("生活 :", score_p);
-            console.log("食事 :", score_eat);
-            alert("生活 :", score_p, "食事 :", score_eat);
+            this.score_p = score_p
+            this.score_eat = score_eat
+            this.overlay = true
         }
     }
 }
