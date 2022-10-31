@@ -13,14 +13,14 @@
                         <v-col class="mt-2" cols="12">
                             <strong>2. 重要度順に並び替えてください(ドラッグ&ドロップ)</strong>
                         </v-col>
+                        <span style="font-size: 8px">1位</span>
                         <draggable v-model="answer['2-importance']" :options="options" style="padding-left: 2%;"
-                            draggable=".item">
-                            <span style="font-size: 8px">1位</span>
-                            <div class="item" v-for="item in answer['2-importance']" :key="item.id">{{
+                            tag="ul">
+                            <li class="item" v-for="item in answer['2-importance']" :key="item.id">{{
                                     item.name
-                            }}</div>
-                            <span style="font-size: 8px">4位</span>
+                            }}</li>
                         </draggable>
+                        <span style="font-size: 8px">4位</span>
                         <div class="newline" />
                         <v-col class="mt-2" cols="12">
                             <strong>3. 現在の睡眠時間に適切ですか</strong>
@@ -305,12 +305,12 @@ export default {
                 // 恋人いる(1点)
                 if (key == '11-partner' & this.answer[key] == 'はい') {
                     score_p += 1;
-                } 
+                }
 
                 // 困った時に相談相手がいる(1点)
                 if (key == '12-problem' & this.answer[key] == 'はい') {
                     score_p += 1;
-                } 
+                }
 
                 // 課題のやるタイミングがすぐ(4点) or ギリギリ(2点) or 締切日前に適度に(1点)
                 if (key == '13-timing') {
@@ -502,9 +502,9 @@ export default {
                 }
             }
 
-            console.log(score_p)
-            console.log(score_eat)
-            alart(score_p, score_eat);
+            console.log("生活 :", score_p);
+            console.log("食事 :", score_eat);
+            alert("生活 :", score_p, "食事 :", score_eat);
         }
     }
 }
